@@ -1,0 +1,38 @@
+# Drupal with PostgreSQL
+#
+# Access via "http://localhost:8080"
+#   (or "http://$(docker-machine ip):8080" if using docker-machine)
+
+version: '3.8'
+
+
+networks:
+  
+  drupal-yaml-demo-network:
+    driver: bridge
+
+
+services:
+
+  drupal:
+    container_name: demo-drupal-yaml-application
+    image: drupal
+    ports:
+      - 8089:80
+    restart: always
+    networks:
+      - drupal-yaml-demo-network
+
+  db:
+    container_name: demo-drupal-yaml-postgres
+    image: postgres
+    environment:
+      POSTGRES_DB: drupal
+      POSTGRES_USER: drupaluser
+      POSTGRES_PASSWORD: drupalpassword
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # mount volume with sql script
+    restart: always
+    networks:
+      - drupal-yaml-demo-network
+
