@@ -10,5 +10,5 @@ FROM drupal:latest
 #RUN npm install
 
 # Docker Run Command
-EXPOSE 8089
+#EXPOSE 8089
 #CMD ["node", "server.js"]
